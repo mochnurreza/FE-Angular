@@ -1,0 +1,157 @@
+<div
+  class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center py-10"
+>
+  <div class="w-full max-h-fit max-w-4xl bg-white rounded-2xl shadow-lg p-8">
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <h2 class="text-xl font-semibold text-slate-800">
+          Employee {{ isEditMode ? "Update" : "Detail" }}
+        </h2>
+        <p class="text-sm text-slate-500">Employee information overview</p>
+      </div>
+
+      <button
+        *ngIf="!isEditMode"
+        (click)="enableEdit()"
+        class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium"
+      >
+        Edit
+      </button>
+    </div>
+
+    <div *ngIf="!isEditMode" class="space-y-2 text-sm">
+      <p><b>Username:</b> {{ employee?.username }}</p>
+      <p><b>Name:</b> {{ employee?.firstName }} {{ employee?.lastName }}</p>
+      <p><b>Email:</b> {{ employee?.email }}</p>
+      <p><b>Birth Date:</b> {{ employee?.birthDate | date }}</p>
+      <p>
+        <b>Salary:</b>
+        {{ employee?.basicSalary | currency : "Rp" : "symbol" : "1.0-0" }}
+      </p>
+      <p><b>Status:</b> {{ employee?.status }}</p>
+      <p><b>Group:</b> {{ employee?.group }}</p>
+      <p><b>Description:</b> {{ employee?.description }}</p>
+
+      <div class="mt-6 text-right">
+        <button (click)="back()" class="px-5 py-2.5 rounded-lg border border-slate-300
+           text-slate-600 hover:bg-slate-100">
+          OK
+        </button>
+      </div>
+    </div>
+
+    <form
+      *ngIf="isEditMode"
+      [formGroup]="form"
+      (ngSubmit)="save()"
+      class="grid grid-cols-1 md:grid-cols-2 gap-6"
+    >
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1"
+          >Username</label
+        >
+        <input
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="username"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1"
+          >First name</label
+        >
+        <input
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="firstName"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1"
+          >Last name</label
+        >
+        <input
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="lastName"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1"
+          >Email</label
+        >
+        <input
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="email"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1"
+          >Birth date</label
+        >
+        <input
+          type="date"
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="birthDate"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1"
+          >Salary</label
+        >
+        <input
+          type="number"
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="basicSalary"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1"
+          >Status</label
+        >
+        <select
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="status"
+        >
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1"
+          >Group</label
+        >
+        <select
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="group"
+        >
+          <option *ngFor="let g of groups" [value]="g">
+            {{ g }}
+          </option>
+        </select>
+      </div>
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-slate-700 mb-1"
+          >Deskripsi</label
+        >
+        <textarea
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="description"
+        ></textarea>
+      </div>
+
+      <div class="md:col-span-2 flex justify-end gap-2">
+        <button
+          type="button"
+          (click)="cancelEdit()"
+          class="px-5 py-2.5 rounded-lg border border-slate-300
+           text-slate-600 hover:bg-slate-100"
+        >
+          Cancel
+        </button>
+
+        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+
+.colored-toast.swal2-icon-success {
+  background-color: #16a34a !important;
+  color: #fff !important;
+}
+
+.colored-toast.swal2-icon-error {
+  background-color: #dc2626 !important;
+  color: #fff !important;
+}
+
+.colored-toast.swal2-icon-warning {
+  background-color: #f59e0b !important;
+  color: #fff !important;
+}
+
+.colored-toast.swal2-icon-info {
+  background-color: #2563eb !important;
+  color: #fff !important;
+}

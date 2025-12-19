@@ -1,0 +1,195 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center py-10">
+  <div class="w-full max-h-fit max-w-4xl bg-white rounded-2xl shadow-lg p-8">
+    <h2 class="text-xl font-semibold text-slate-800 mb-6">Add Employee</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Username</label>
+        <input
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5
+           focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="username"
+          placeholder="Username"
+        />
+        <p
+          *ngIf="
+            form.get('username')?.touched &&
+            form.get('username')?.hasError('required')
+          "
+          class="text-sm text-red-600 mt-1"
+        >
+          Username is required
+        </p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+        <input
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5
+           focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="email"
+          placeholder="Email"
+        />
+        <p
+          *ngIf="
+            form.get('email')?.touched && form.get('email')?.hasError('required')
+          "
+          class="text-sm text-red-600 mt-1"
+        >
+          Email is required
+        </p>
+        <p
+          *ngIf="
+            form.get('email')?.touched && form.get('email')?.hasError('email')
+          "
+          class="text-sm text-red-600 mt-1"
+        >
+          Invalid email format
+        </p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">First name</label>
+        <input
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5
+           focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="firstName"
+          placeholder="First Name"
+        />
+        <p
+          *ngIf="
+            form.get('firstName')?.touched &&
+            form.get('firstName')?.hasError('required')
+          "
+          class="text-sm text-red-600 mt-1"
+        >
+          First name is required
+        </p>
+
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Last name</label>
+        <input
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5
+           focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="lastName"
+          placeholder="Last Name"
+        />
+        <p
+          *ngIf="
+            form.get('lastName')?.touched &&
+            form.get('lastName')?.hasError('required')
+          "
+          class="text-sm text-red-600 mt-1"
+        >
+          Last name is required
+        </p>
+
+      </div>
+      <div>
+
+        <label class="block text-sm font-medium text-slate-700 mb-1">Birth date</label>
+        <input
+          type="date"
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5
+           focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="birthDate"
+        />
+        <p
+          *ngIf="
+            form.get('birthDate')?.touched &&
+            form.get('birthDate')?.hasError('required')
+          "
+          class="text-sm text-red-600 mt-1"
+        >
+          Birth date is required
+        </p>
+        <p
+          *ngIf="
+            form.get('birthDate')?.touched &&
+            form.get('birthDate')?.hasError('maxDateToday')
+          "
+          class="text-sm text-red-600 mt-1"
+        >
+          Birth date cannot be later than today
+        </p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Salary</label>
+        <input
+          type="number"
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5
+           focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="basicSalary"
+          placeholder="Salary"
+        />
+        <p
+          *ngIf="
+            form.get('basicSalary')?.touched &&
+            form.get('basicSalary')?.hasError('required')
+          "
+          class="text-sm text-red-600 mt-1"
+        >
+          Salary is required
+        </p>
+
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Status</label>
+        <select class="w-full rounded-lg border border-slate-300 px-4 py-2.5
+           focus:ring-2 focus:ring-blue-400 focus:outline-none" formControlName="status">
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+        <p
+          *ngIf="
+            form.get('status')?.touched &&
+            form.get('status')?.hasError('required')
+          "
+          class="text-sm text-red-600 mt-1"
+        >
+          Status is required
+        </p>
+
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Group</label>
+        <select class="w-full rounded-lg border border-slate-300 px-4 py-2.5
+           focus:ring-2 focus:ring-blue-400 focus:outline-none" formControlName="group">
+          <option *ngFor="let g of groups" [value]="g">{{ g }}</option>
+        </select>
+        <p
+          *ngIf="
+            form.get('group')?.touched && form.get('group')?.hasError('required')
+          "
+          class="text-sm text-red-600 mt-1"
+        >
+          Group is required
+        </p>
+
+      </div>
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Deskripsi</label>
+        <textarea
+          class="w-full rounded-lg border border-slate-300 px-4 py-2.5
+           focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          formControlName="description"
+          placeholder="Description"
+        ></textarea>
+
+      </div>
+
+      <div class="md:col-span-2 flex justify-end gap-4 pt-4">
+        <button
+          class="px-5 py-2.5 rounded-lg border border-slate-300
+           text-slate-600 hover:bg-slate-100"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+        <button class="px-6 py-2.5 rounded-lg bg-blue-600 text-white font-semibold
+           hover:bg-blue-700 active:scale-[0.98] transition">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

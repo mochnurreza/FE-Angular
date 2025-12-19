@@ -1,0 +1,144 @@
+<div
+  class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100"
+  >
+  <div class="max-w-7xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div class="bg-white rounded-2xl shadow-md p-6">
+      <div
+        class="flex justify-between items-center mb-6"
+      >
+        <h1 class="text-xl font-semibold text-slate-800">Employee List</h1>
+        <a
+          routerLink="/employees/add"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium"
+        >
+          + Add Employee
+        </a>
+      </div>
+      <div class="flex gap-4 mb-6">
+        <input
+          [(ngModel)]="searchName"
+          (ngModelChange)="filtered()"
+          placeholder="Search name"
+          class="w-64 rounded-lg border border-slate-300 px-4 py-2
+               focus:ring-2 focus:ring-blue-400 focus:outline-none"
+        />
+        <select
+          [(ngModel)]="searchStatus"
+          (ngModelChange)="filtered()"
+          class="rounded-lg border border-slate-300 px-4 py-2
+               focus:ring-2 focus:ring-blue-400 focus:outline-none"
+        >
+          <option value="">All</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+
+      <div class="overflow-x-auto bg-white rounded shadow">
+        <table class="w-full border-collapse text-sm p-3 border-slate-50">
+          <thead class="bg-gray-300">
+            <tr class="bg-slate-100 text-slate-600 text-left">
+              <th class="px-4 py-3 rounded-l-lg" (click)="sorting('username')">
+                Username
+                <span *ngIf="sortField === 'username'" class="ml-1 text-xs">
+                  {{ sortDir === "ASC" ? "▲" : "▼" }}
+                </span>
+              </th>
+
+              <th class="px-4 py-3" (click)="sorting('firstName')">
+                Name
+                <span *ngIf="sortField === 'firstName'" class="ml-1 text-xs">
+                  {{ sortDir === "ASC" ? "▲" : "▼" }}
+                </span>
+              </th>
+              <th class="px-4 py-3" (click)="sorting('email')">
+                Email
+                <span *ngIf="sortField === 'email'" class="ml-1 text-xs">
+                  {{ sortDir === "ASC" ? "▲" : "▼" }}
+                </span>
+              </th>
+              <th class="px-4 py-3" (click)="sorting('basicSalary')">
+                Salary
+                <span *ngIf="sortField === 'basicSalary'" class="ml-1 text-xs">
+                  {{ sortDir === "ASC" ? "▲" : "▼" }}
+                </span>
+              </th>
+              <th class="px-4 py-3 " (click)="sorting('status')">
+                Status
+                <span *ngIf="sortField === 'status'" class="ml-1 text-xs">
+                  {{ sortDir === "ASC" ? "▲" : "▼" }}
+                </span>
+              </th>
+              <th class="px-4 py-3 rounded-r-lg text-center">Action</th>
+            </tr>
+          </thead>
+
+          <tbody class="divide-y">
+            <tr *ngFor="let emp of paginated" class="hover:bg-slate-50 transition">
+              <td class="px-4 py-3">{{ emp.username }}</td>
+              <td class="px-4 py-3">{{ emp.firstName }} {{ emp.lastName }}</td>
+              <td class="px-4 py-3">{{ emp.email }}</td>
+              <td class="px-4 py-3">
+                {{ emp.basicSalary | currency : "Rp" : "symbol" : "1.0-0" }}
+              </td>
+              <td class="px-4 py-3">
+                <span
+                  class="px-2 py-1 rounded text-xs font-medium"
+                  [ngClass]="{
+                    'bg-green-100 text-green-700': emp.status === 'Active',
+                    'bg-red-100 text-red-700': emp.status === 'Inactive'
+                  }"
+                >
+                  {{ emp.status }}
+                </span>
+              </td>
+              <td class="px-4 py-3 text-center space-x-2">
+                <a
+                  [routerLink]="['/employees', emp.username]"
+                  [queryParams]="{
+                    name: searchName || null,
+                    status: searchStatus || null
+                  }"
+                  class="bg-blue-600 px-3 py-1 text-white border-none rounded hover:bg-blue-700"
+                >
+                  Detail
+                </a>
+                <button
+                  (click)="delete(emp.username)"
+                  class="bg-red-600 px-3 py-1 text-white border-none rounded hover:bg-red-700"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+
+            <tr *ngIf="paginated.length === 0">
+              <td colspan="6" class="text-center py-6 text-gray-400">
+                No data found
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex justify-end items-center gap-2 mt-6 text-sm">
+        <button
+          class="px-3 py-1 border-zinc-400 bg-slate-200  rounded hover:bg-slate-300"
+          (click)="changePage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+        >
+          Prev
+        </button>
+
+        <span class="text-sm"> Page {{ currentPage }} of {{ total }} </span>
+
+        <button
+          class="px-3 py-1 border-zinc-400 bg-slate-200 rounded hover:bg-slate-300"
+          (click)="changePage(currentPage + 1)"
+          [disabled]="currentPage === total"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
