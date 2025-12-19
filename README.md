@@ -55,8 +55,8 @@ TASK-FE/
 
 ## Instalasi
 
-git clone -b dev https://github.com/mochnurreza/FE-Angular.git
-cd FE-Angular
-npm install
-npm start
----
+    git clone -b dev https://github.com/mochnurreza/FE-Angular.git
+    cd FE-Angular
+    npm install
+    npm start
+
